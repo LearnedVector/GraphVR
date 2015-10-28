@@ -1,16 +1,16 @@
 var database = {
-    
-    object:{
+
+    obj:{
         0:{
-            name: "University of Missouri - Kansas City",
-            catID: 0    
+            name: "UMKC",
+            catID: 0
         },
         1:{
-            name: "Missouri University",
+            name: "MU",
             catID: 0
         }
     },
-    
+
     dataset:{
         0:{
             value: 22188,
@@ -60,7 +60,7 @@ var database = {
         9:{
             value: 81,
             objID: 1,
-            attId: 4
+            attID: 4
         },
         10:{
             value: 35,
@@ -69,28 +69,79 @@ var database = {
         },
         11:{
             value: 69,
-            objId: 1,
+            objID: 1,
             attID: 5
         }
     },
-    
+
     attribute:{
         0:{
             name: "in-state tuition",
             warning: false,
-            importance: 5
+            importance: 3
         },
         1:{
             name: "Out-of-State Tuition",
             warning: true,
-            importance: 5
+            importance: 3
+        },
+        2: {
+            name: "Student-Size",
+            warning: false,
+            importance: 1
+        },
+        3: {
+            name: "City Population",
+            warning: false,
+            importance: 3,
+        },
+        4: {
+            name: "Acceptance Rate",
+            warning: false,
+            importance: 2
+        },
+        5: {
+            name: "Graduation Rate",
+            warning: false,
+            importance: 3
         }
     },
-    
+
     category:{
         0:{
-            name: "colleges",
+            name: "colleges"
         }
     }
-    
+
 }
+
+
+
+
+
+
+
+
+
+<!---FUNCTIONS-------------------------------------------------------->
+    
+    
+function init(){
+    load_selectoptions();
+}
+
+function load_selectoptions(){
+    var data = database["obj"];
+    var html=""; 
+    for(var i=0; i<Object.keys(database.obj).length; i++){
+        $("#select1").append(get_options(data[i]));
+        $("#select2").append(get_options(data[i]));
+    } 
+}
+
+function get_options(data){
+    var html="";
+    html+="<option value='"+data["name"]+"'>"+data["name"]+"</option>";
+    return html;    
+}
+

@@ -5,12 +5,15 @@
 
 <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha256-gJ9rCvTS5xodBImuaUYf1WfbdDKq54HCPz9wk8spvGs= sha512-weqt+X3kGDDAW9V32W7bWc6aSNCMGNQsdOpfJJz/qD/Yhp+kNeR+YyvvWojJ+afETB31L0C4eO0pcygxfTgjgw==" crossorigin="anonymous">
 <link rel="stylesheet" href="Styles.css" />
+<script src="data.js"></script>
 
 <title>SEMANTIC CANVAS</title>
 
 </head>
 
-<body>
+<body onload="init()">
+    
+    <!-- NAVBAR -->
     <nav class="navbar nav-custom">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -43,17 +46,18 @@
         <!-- SIDEBAR THINGS -->
         <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 sidebar">
             <h4 class="side-header">COMPARE</h4>
-
-            <select class="picker">
-                <option>MU</option>
-                <option>UMKC</option>
-            </select>
+            <div id="ab">
+            </div>
+            <form>
+            <select id="select1"></select>
             <h4 class="header-margin">AND</h4>
-          <select class="picker">
-            <option>UMKC</option>
-            <option>MU</option>
-          </select>
+            <select id="select2" onchange="generate()"></select>
+            </form>
+            <button type="button" class="btn btn-default" onclick="generatechart()">GO!</button>
+            
         </div>
+
+        
         <!--Chart-->
         <div class="col-md-9 col-lg-10 col-sm-8 col-xs-8">
             <div class="row sort-header">
@@ -71,11 +75,13 @@
                 <div class="col-md-5">
                 <div class="element1">
                     <h3>UMKC</h3>
+                    <div class="left-chart-style" id="leftside"></div>
                     </div></div>
                 <div class="col-md-1 seperator hidden-xs hidden-sm"></div>
                 <div class="col-md-5">
                 <div class="element2">
                     <h3>MU</h3>
+                    <div class="right-chart-style" id="rightside"></div>
                     </div></div>
                 </div>
                 
@@ -97,3 +103,145 @@
 </body>
 </html>
 
+
+
+
+<script type="text/javascript">
+//comments to help you understand what i did
+
+    // just looping through to make sure our databse works
+    // for (j = 0; j < Object.keys(database).length; j++){
+    //     console.log(database)
+    // }
+    //
+    // //identifying object by key
+    // if (Object.keys(database.obj).indexOf("1") == 1){
+    //       console.log("here is the key " + Object.keys(database.obj).indexOf("1"))
+    // }
+
+    //choose category in this case it will be colleges.. category 0
+    var catKey = 0
+    //using category key value iterate through obj table to find the matching values
+    var objArray = []
+    //choose two obj to compare
+    for (index = 0; index < Object.keys(database.obj).length; index++){
+      if(database.obj[index].catID == catKey){
+        objArray.push({objID: index, name: database.obj[index].name}) //append object to array
+      }
+    }
+    //console.log(objArray)
+
+    //once find names and objId go through dataset table to find relevant values using objectID
+    var objidRight = objArray[0].objID //set these to store objectID value
+    var objidLeft = objArray[1].objID
+    var leftGraphArray = [] //arrays to store values from dataset
+    var rightGraphArray = []
+
+    for (index = 0; index < Object.keys(database.dataset).length; index++){
+      if (database.dataset[index].objID == objidRight){ //find the obj value and set them to arrays
+          var value = database.dataset[index].value
+          var attID = database.dataset[index].attID
+          var attName = database.attribute[attID].name
+          var attWarning = database.attribute[attID].warning
+          var attImportance = database.attribute[attID].importance
+
+          leftGraphArray.push({name: attName, value: value, warning: attWarning, importance: attImportance})
+      }else if (database.dataset[index].objID == objidLeft){
+          var value = database.dataset[index].value
+          var attID = database.dataset[index].attID
+          var attName = database.attribute[attID].name
+          var attWarning = database.attribute[attID].warning
+          var attImportance = database.attribute[attID].importance
+
+          rightGraphArray.push({name: attName, value: value, warning: attWarning, importance: attImportance})
+      }
+    }
+
+     console.log(leftGraphArray)
+     console.log(rightGraphArray)
+
+     //storing colors in variables to use for later
+     var darkBlue = '#235789', blue = '#4983BB', lightBlue='#59A5D8', warning='#E74546'
+
+//to animate the bars individually at different times. i had to make a recursive function with the setTimeOut()
+//function to delay when to call the jquery animate function
+
+// using function recursively
+var i = 0                      //  set your counter to 1
+//plain javascript
+function myLoop () {            //  create a loop function
+   setTimeout(function () {     //  call a .03s setTimeout when the loop is called. time defined at the last line
+        var idRight = i.toString()   // turning the int i into a string
+        var idLeft = (i+leftGraphArray.length).toString()
+
+        var hash ="#"           // storing # into varaible .. jquery needs a # when identifying with id
+        var graphRight = hash.concat(idRight) // adding this two vriables... name =  #+id = "#id" use this to identify the div to animate
+        var graphLeft = hash.concat(idLeft)
+        // console.log("leftGraphArray is " + leftGraphArray[i])
+        // console.log("leftGraphArray is " + rightGraphArray[i])
+        var percentDifference = Math.abs((leftGraphArray[i].value - rightGraphArray[i].value)/(leftGraphArray[i].value + rightGraphArray[i].value))
+        // console.log("percent difference is " + percentDifference)
+        var valueLeft, valueRight
+        var max = max = 285* (Math.random()*(1.4-1)+1)
+        if (leftGraphArray[i].value > rightGraphArray[i].value){
+            valueLeft = max
+            valueRight = max - (max*percentDifference)
+
+        }else{
+            valueRight = max
+            valueLeft =  max - (max*percentDifference)
+        }
+        // console.log(valueRight)
+        // console.log(valueLeft)
+        //var attributeLeft, attributeRight
+        var leftColor, RightColor
+
+        if ( leftGraphArray[i].warning == false){
+          if (leftGraphArray[i].importance == 1) leftColor = lightBlue
+          if (leftGraphArray[i].importance == 2) leftColor = blue
+          if (leftGraphArray[i].importance == 3) leftColor = darkBlue
+        }else {
+          leftColor = warning
+        }
+
+        if ( rightGraphArray[i].warning == false){
+          if (rightGraphArray[i].importance == 1) RightColor = lightBlue
+          if (rightGraphArray[i].importance == 2) RightColor = blue
+          if (rightGraphArray[i].importance == 3) RightColor = darkBlue
+        }else {
+          RightColor = warning
+        }
+
+
+        var shiftLeftValue = "-="+valueLeft.toString()+"px" //used to animate graph left this amount
+
+        // $(graphLeft).css({'position': 'relative', 'left': "100%"}) //position left graph
+
+
+          $( "#leftside" ).append( "<div id='bar' class='text-right'> </div> </br>")
+          $('#bar').attr('id', idLeft)
+          $('#bar').removeAttr('id', 'bar')
+
+          $( "#rightside" ).append( "<div id='bar' > </div> </br>")
+          $('#bar').attr('id', idRight)
+          $('#bar').removeAttr('id', 'bar')
+
+
+        $(document).ready(function(){ $(graphLeft).animate({ height: 30, width: valueLeft, left: shiftLeftValue}, 350)}, //set a .35s animate speed set values to a and b ..jquery stuff
+            $(graphLeft).css({'position': 'relative', 'left': "100%", 'height': 30, 'width': 0, 'background-color': leftColor, 'color': 'white'}),
+            $(graphLeft).html(leftGraphArray[i].name) )
+
+        $(document).ready(function(){ $(graphRight).animate({ height: 30, width: valueRight }, 350)},
+            $(graphRight).css({'height': 30, 'width': 0, 'background-color': RightColor, 'color': 'white'}),
+            $(graphRight).html(rightGraphArray[i].name) )
+
+        i++                     //  increment the counter
+        if (i < leftGraphArray.length) {            //  if the counter < k, call the loop function again (recursive) NOTE* l is the amount of objects from the for loop above.
+           myLoop()             // again which will trigger another
+        }
+   }, 30)                       // calling a .03s delay
+}
+
+myLoop()                        //  start the loop
+
+</script>
