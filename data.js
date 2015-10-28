@@ -145,3 +145,54 @@ function get_options(data){
     return html;    
 }
 
+function generate_chart(){
+    //get the two selections
+    var element1=$("#select1").val();
+    var element2=$("#select2").val();
+
+    //find the id of the selection
+    var elem1id=find_id(element1);
+    var elem2id=find_id(element2);
+    
+    console.log(elem1id);
+    
+    //arrays to store values from dataset
+    var leftGraphArray = find_values(elem1id);
+    var rightGraphArray = [];
+    
+    console.log(leftGraphArray);
+    
+    
+}
+
+//get object id
+function find_id(value){
+    var objID;
+    for(var i=0; i<Object.keys(database.obj).length; i++) {
+        if(database.obj[i].name == value)
+        {
+            objID=i;
+        }
+    }
+    
+    return objID;
+}
+
+//gets all the values of an object and returns an array
+function find_values(elemid){
+    var graphArray = [];
+    for(var i=0; i<Object.keys(database.dataset).length; i++) {
+        if(database.dataset[i].objID == elemid)
+        {
+          var value = database.dataset[i].value
+          var attID = database.dataset[i].attID
+          var attName = database.attribute[attID].name
+          var attWarning = database.attribute[attID].warning
+          var attImportance = database.attribute[attID].importance
+          
+          graphArray.push({name: attName, value: value, warning: attWarning, importance: attImportance})
+        }
+    }
+    
+    return graphArray;
+}
