@@ -69,7 +69,6 @@ function find_values(elemid){
 }
 
 //Parameters: Array of original values for Lgraph & Rgraph
-//Returns: 
 function getdifferenceArray(leftGraph,rightGraph)
 {
     //First, we compare the graphs and find like attributes
@@ -83,21 +82,27 @@ function getdifferenceArray(leftGraph,rightGraph)
                 {
                     var printablevalue_L = calc_difference(leftGraph[i].value,rightGraph[j].value);
                     leftGraph[i].value=printablevalue_L;
-                    console.log(leftGraph[i]);
+                    rightGraph[j].value=0;
+                    //make right[i].value=0, so we won't print it later
                 }
                 else
                 {
                     var printablevalue_R = calc_difference(rightGraph[j].value,leftGraph[i].value);
+                    rightGraph[j].value=printablevalue_R;
+                    leftGraph[i].value=0;
+                //make left[i].value=0, so we won't print it later              
                 }
             }
-            //else, 
-            //other object doesnt have same attribute? We need to do something with that value and make it printable.
+            //else, if no same attribute, 
+            //We need to do something with that value and make it printable.
         }
     } //endfor
     
-    //sort both arrays by value number, descending order
+    //sort both arrays by value number in descending order
+    leftGraph.sort(descending);
+    rightGraph.sort(descending);
     
-    
+    //print arrays
     
 }
 
@@ -110,4 +115,8 @@ function calc_difference(bignum, smallnum)
     var max=285* (Math.random()*(1.4-1)+1)
     var printable_value= max - (max*percentdifference)  
     return printable_value;
+}
+
+function descending(a,b){
+    return b.value-a.value;
 }
