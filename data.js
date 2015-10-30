@@ -154,13 +154,16 @@ function generate_chart(){
     var elem1id=find_id(element1);
     var elem2id=find_id(element2);
     
-    console.log(elem1id);
-    
     //arrays to store values from dataset
     var leftGraphArray = find_values(elem1id);
-    var rightGraphArray = [];
+    var rightGraphArray = find_values(elem2id);
     
     console.log(leftGraphArray);
+    
+    //get differences array
+   var differenceArray = getdifferenceArray(leftGraphArray,rightGraphArray);
+    
+    //print out the array
     
     
 }
@@ -195,4 +198,38 @@ function find_values(elemid){
     }
     
     return graphArray;
+}
+
+//takes in array, returns array of differences
+function getdifferenceArray(leftGraph,rightGraph)
+{
+    var leftGraphdiff = [];
+    var rightGraphdiff = [];
+    
+    for (var i=0; i<leftGraph.length; i++) {
+        for (var j=0; j<rightGraph.length; j++)
+        { //find identical attribute to compare
+            if (leftGraph[i].name == rightGraph[j].name)
+            {
+                //compare if left value is bigger
+                if (leftGraph[i].value > rightGraph[j].value)
+                {
+                    var percentDifference = calc_difference(leftGraph[i].value,rightGraph[j].value);
+                }
+                else
+                {
+                    var percentDifference = calc_difference(rightGraph[j].value,leftGraph[i].value);
+                }
+                
+            }
+        
+        }
+    }
+}
+
+                        
+function calc_difference(bignum, smallnum)
+{
+    var percentdifference = Math.abs((bignum-smallnum)/(bignum+smallnum))
+    return percentdifference;
 }
