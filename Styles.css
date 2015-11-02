@@ -100,10 +100,30 @@ h3 {
 
 
 .left-chart-style {
-    margin-left: -90px;
+    margin-left: 300px;
+}
+
+.importance1, .importance2, .importance3 {
+    margin: 5px; 
+}
+
+.warning.importance3, .warning.importance2, .warning.importance1 {
+    background-color: #E74546;
+}
+
+.importance1 {
+    background-color: #59A5D8;
+}
+
+.importance2 {
+    background-color: #4983BB;
+}
+
+.importance3{
+    background-color: #235789;
 }
 
 .right-chart-style {
-    margin-left: -65px;
+    margin-left: -60px;
     
 }

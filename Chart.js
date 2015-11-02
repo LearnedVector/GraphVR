@@ -28,8 +28,10 @@ function get_info(){
     var elem2id=find_id(element2);
     
     //arrays to store values from dataset
-    var leftGraphArray = find_values(elem1id);
-    var rightGraphArray = find_values(elem2id);
+    var leftGraphArray = find_values(elem1id,element1);
+    var rightGraphArray = find_values(elem2id,element2);
+    
+    //console.log(leftGraphArray);
     
     //find the differences in values of attributes
     getdifferenceArray(leftGraphArray,rightGraphArray);
@@ -50,18 +52,18 @@ function find_id(value){
 }
 
 //gets all the values of an object and returns an array
-function find_values(elemid){
+function find_values(elemid,elementName){
     var graphArray = [];
     for(var i=0; i<Object.keys(database.dataset).length; i++) {
         if(database.dataset[i].objID == elemid)
-        {
+        {    
           var value = database.dataset[i].value
           var attID = database.dataset[i].attID
           var attName = database.attribute[attID].name
           var attWarning = database.attribute[attID].warning
           var attImportance = database.attribute[attID].importance
           
-          graphArray.push({name: attName, value: value, warning: attWarning, importance: attImportance})
+          graphArray.push({objName:elementName, att_Name: attName, value: value, warning: attWarning, importance: attImportance})
         }
     }
     
@@ -75,7 +77,7 @@ function getdifferenceArray(leftGraph,rightGraph)
     for (var i=0; i<leftGraph.length; i++) {
         for (var j=0; j<rightGraph.length; j++)
         { //find identical attribute to compare
-            if (leftGraph[i].name == rightGraph[j].name)
+            if (leftGraph[i].att_Name == rightGraph[j].att_Name)
             {
                 //compare if left value is bigger
                 if (leftGraph[i].value > rightGraph[j].value)
@@ -102,8 +104,15 @@ function getdifferenceArray(leftGraph,rightGraph)
     leftGraph.sort(descending);
     rightGraph.sort(descending);
     
-    //print arrays
+    console.log(leftGraph);
+    console.log(rightGraph);
     
+    //print arrays
+    printGraph(leftGraph,"l");
+    printGraph(rightGraph,"r");
+    
+//    animate(leftGraph, "l");
+//    animate(rightGraph, "r");
 }
 
                         
@@ -119,4 +128,57 @@ function calc_difference(bignum, smallnum)
 
 function descending(a,b){
     return b.value-a.value;
+}
+
+function printGraph(graphArray, side)
+{
+    var html=""
+    
+    for (var i=0; i<graphArray.length;i++)
+    {   
+        if (graphArray[i].warning == true){
+            var warning = "warning"
+        }else {
+            var warning = ""
+        }
+        html+="<div id='"+graphArray[i].objName+[i]+"' class='"+warning+" importance"+graphArray[i].importance+"'></div>"
+
+    }
+    
+    if (side=='l')
+    {   
+        $("#leftside").append(html);
+    }
+    else{
+    
+        $("#rightside").append(html);
+    }  
+    var index = 0;
+    animate(graphArray, side, index)
+}
+
+function animate(graphArray, side, i){
+    setTimeout(function() {
+    if(side == 'l') {
+        var shiftLeftValue = "-"+graphArray[i].value.toString()+"px"; 
+        }else {
+        var shiftLeftValue = null;
+        }
+        
+    console.log(shiftLeftValue)
+    console.log(graphArray[i].value)
+    
+    if (graphArray[i].value != 0){
+      
+      $("#"+graphArray[i].objName+[i]).css({'position': 'relative', 'height': 30, 'width': 0, 'color': 'white'})    
+        
+      $("#"+graphArray[i].objName+[i]).animate({width:graphArray[i].value, left: shiftLeftValue},350)
+    
+      $("#"+graphArray[i].objName+[i]).html(graphArray[i].att_Name)
+    }
+    i++
+    if( i < 6){
+        animate(graphArray,side, i) 
+    }
+    },30)
 }
