@@ -1,22 +1,105 @@
 <html>
-    <head>
-        <script src="data.js"></script>
-    </head>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <body>
-        
-        
-        
-    </body>
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha256-gJ9rCvTS5xodBImuaUYf1WfbdDKq54HCPz9wk8spvGs= sha512-weqt+X3kGDDAW9V32W7bWc6aSNCMGNQsdOpfJJz/qD/Yhp+kNeR+YyvvWojJ+afETB31L0C4eO0pcygxfTgjgw==" crossorigin="anonymous">
+<link rel="stylesheet" href="Styles.css" />
+<script src="data.js"></script>
+<script src="Chart.js"></script>    
 
-</html>
-<script>
+<title>SEMANTIC CANVAS</title>
+
+</head>
+
+<body onload="init()">
     
- console.log(database) 
- 
- for (i=0; i < Object.keys(database.dataset).length; i++)
-     if (database.dataset[i].objID == 0){
-         console.log(database.object[0].name)
-     }
-         
-</script>
+    <!-- NAVBAR -->
+    <nav class="navbar nav-custom">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">SEMANTIC CANVAS</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">CATEGORY<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Category 1</a></li>
+            <li><a href="#">Category 2</a></li>
+            <li><a href="#">Category 3</a></li>
+          </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container-fluid">
+        
+        <!-- SIDEBAR THINGS -->
+        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 sidebar">
+            <h4 class="side-header">COMPARE</h4>
+            <div id="ab">
+            </div>
+            <form>
+            <select id="select1"></select>
+            <h4 class="header-margin">AND</h4>
+            <select id="select2"></select>
+            </form>
+            <button type="button" class="btn btn-default" onclick="get_info()">GO!</button>
+            
+        </div>
+
+        
+        <!--Chart-->
+        <div class="col-md-9 col-lg-10 col-sm-8 col-xs-8">
+            <div class="row sort-header">
+                <span class="inline buffer">DISPLAY BY</span>
+                <div class="btn-group">
+                <button type="button" class="btn btn-default">
+  <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+</button>
+                 <button type="button" class="btn btn-default">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    </button></div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-2 chart-header">
+                <div class="col-md-5">
+                <div class="element1">
+                    <h3>UMKC</h3>
+                    <div class="left-chart-style" id="leftside"></div>
+                    </div></div>
+                <div class="col-md-1 seperator hidden-xs hidden-sm"></div>
+                <div class="col-md-5">
+                <div class="element2">
+                    <h3>MU</h3>
+                    <div class="right-chart-style" id="rightside"></div>
+                    </div></div>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+    
+    
+    
+    </div>
+        
+
+
+
+<!-- include javascript, jQuery FIRST -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
