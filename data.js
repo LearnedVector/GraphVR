@@ -71,18 +71,48 @@ var database = {
             value: 69,
             objID: 1,
             attID: 5
+        },
+        12:{
+            value: 10,
+            objID: 0,
+            attID: 6
+        },
+        13:{
+            value: 75,
+            objID: 1,
+            attID: 6,
+        },
+        14: {
+            value: 124,
+            objID: 1,
+            attID: 7
+        },
+        15: {
+            value: 2,
+            objID: 0,
+            attID: 7
+        },
+        16: {
+            value: 17,
+            objID: 1,
+            attID: 8
+        },
+        17: {
+            value: 41,
+            objID: 0,
+            attID: 8
         }
     },
 
     attribute:{
         0:{
-            name: "in-state tuition",
+            name: "In-state tuition",
             warning: false,
             importance: 3
         },
         1:{
             name: "Out-of-State Tuition",
-            warning: true,
+            warning: false,
             importance: 3
         },
         2: {
@@ -104,7 +134,23 @@ var database = {
             name: "Graduation Rate",
             warning: false,
             importance: 3
+        },
+        6: {
+            name: "Liquor Violation",
+            warning: true,
+            importance: 2
+        },
+        7: {
+            name: "Drug Law Violation",
+            warning: true,
+            importance: 2
+        },
+        8: {
+            name: "Property Crime",
+            warning: true,
+            importance: 3
         }
+        
     },
 
     category:{
@@ -119,10 +165,4 @@ var database = {
 
 
 
-
-
-
-
-<!---FUNCTIONS-------------------------------------------------------->
-    
     
