@@ -22,6 +22,10 @@ function get_info(){
     //get the two selections
     var element1=$("#select1").val();
     var element2=$("#select2").val();
+    
+    //set header to elementname
+    $("#elem1-header").append(element1);
+    $("#elem2-header").append(element2);
 
     //find the id of the selection
     var elem1id=find_id(element1);
@@ -30,8 +34,6 @@ function get_info(){
     //arrays to store values from dataset
     var leftGraphArray = find_values(elem1id,element1);
     var rightGraphArray = find_values(elem2id,element2);
-    
-    //console.log(leftGraphArray);
     
     //find the differences in values of attributes
     getdifferenceArray(leftGraphArray,rightGraphArray);
