@@ -141,7 +141,7 @@ function printGraph(graphArray, side)
         }else {
             var warning = ""
         }
-        html+="<div id='"+graphArray[i].objName+[i]+"' class='"+warning+" importance"+graphArray[i].importance+"'></div>"
+        html+="<div id='"+graphArray[i].objName+[i]+"' class='"+warning+" generalbar importance"+graphArray[i].importance+"'></div>"
 
     }
     
@@ -170,11 +170,9 @@ function animate(graphArray, side, i){
     
     if (graphArray[i].value != 0){
       
-      $("#"+graphArray[i].objName+[i]).css({'position': 'relative', 'height': 30, 'width': 0, 'color': 'white'})    
-        
       $("#"+graphArray[i].objName+[i]).animate({width:graphArray[i].value, left: shiftLeftValue},350)
-    
-      $("#"+graphArray[i].objName+[i]).html(graphArray[i].att_Name)
+      var name = graphArray[i].att_Name.replace(/\s/g, "&nbsp;")
+    $("#"+graphArray[i].objName+[i]).html(name)
     }
     i++
     if( i < 6){

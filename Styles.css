@@ -95,10 +95,6 @@ h3 {
     
 }
 
-
-
-
-
 .left-chart-style {
     margin-left: 300px;
 }
@@ -126,4 +122,15 @@ h3 {
 .right-chart-style {
     margin-left: -60px;
     
+}
+
+.generalbar {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    position: relative; 
+    height: 30;
+    width: 0;
+    color: white; 
+    line-height: 30px;
 }
