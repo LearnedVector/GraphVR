@@ -177,7 +177,7 @@ function animate(graphArray, side, i){
     $("#"+graphArray[i].objName+[i]).html(name)
     }
     i++
-    if( i < 6){
+    if( i < graphArray.length){
         animate(graphArray,side, i) 
     }
     },30)
