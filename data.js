@@ -124,7 +124,7 @@ var database = {
             objID: 1,
             attID: 9
         },
-          20: {
+        20: {
             value: 1,
             objID: 1,
             attID: 10
@@ -145,46 +145,36 @@ var database = {
             attID: 11
         },
         24: {
-            value: 4280,
-            objID: 1,
-            attID: 12
-        },
-        25: {
-            value: 4585,
-            objID: 0,
-            attID: 12
-        },
-        26: {
             value: 4065,
             objID: 1,
             attID: 13
         },
-        27: {
+        25: {
             value: 4295,
             objID: 0,
             attID: 13
         },
-        28: {
+        26: {
             value: 715,
             objID: 1,
             attID: 14
         },
-        29: {
+        27: {
             value: 1416,
             objID: 0,
             attID: 14
         },
-        30: {
+        28: {
             value: 5437,
             objID: 1,
             attID: 15
         },
-        31: {
+        29: {
             value: 4497,
             objID: 0,
             attID: 15
         },
-        32: {
+        30: {
             value: 1431,
             objID: 1,
             attID: 16
@@ -305,16 +295,11 @@ var database = {
             attID: 11
         },
         54: {
-            value: 4977,
-            objID: 2,
-            attID: 12
-        },
-        55: {
             value: 4484,
             objID: 2,
             attID: 13
         },
-        54: {
+        55: {
             value: 3980,
             objID: 2,
             attID: 14
@@ -415,166 +400,156 @@ var database = {
             attID: 11
         },
         75: {
-            value: 4813,
-            objID: 3,
-            attID: 12
-        },
-        76: {
             value: 4537,
             objID: 3,
             attID: 13
         },
-        77: {
+        76: {
             value: 1352,
             objID: 3,
             attID: 14
         },
-        78: {
+        77: {
             value: 4226,
             objID: 3,
             attID: 15
         },
-        79: {
+        78: {
             value: 1432,
             objID: 3,
             attID: 16
         },
-        80: {
+        79: {
             value: 6817,
             objID: 3,
             attID: 17
         },
-        81: {
+        80: {
             value: 5921,
             objID: 3,
             attID: 18
         },
-        82: {
+        81: {
             value: 12803,
             objID: 3,
             attID: 19
         },
-        83: {
+        82: {
             value: 3718,
             objID: 3,
             attID: 20
         },
-        84: {
+        83: {
             value: 3974,
             objID: 3,
             attID: 21
         },
-        85: {
+        84: {
             value: 28686,
             objID: 4,
             attID: 0
         },
-        86: {
+        85: {
             value: 51564,
             objID: 4,
             attID: 1
         },
-        87: {
+        86: {
             value: 38157,
             objID: 4,
             attID: 2
         },
-        88: {
+        87: {
             value: 3884000,
             objID: 4,
             attID: 3
         },
-        89: {
+        88: {
             value: 26,
             objID: 4,
             attID: 4
         },
-        90: {
+        89: {
             value: 89,
             objID: 4,
             attID: 5
         },
-        91: {
+        90: {
             value: 5,
             objID: 4,
             attID: 6
         },
-        92: {
+        91: {
             value: 24,
             objID: 4,
             attID: 7
         },
-        93: {
+        92: {
             value: 145,
             objID: 4,
             attID: 8
         },
-        94: {
+        93: {
             value: 6850,
             objID: 4,
             attID: 9
         },
-        95: {
+        94: {
             value: 6,
             objID: 4,
             attID: 10
         },
-        96: {
+        95: {
             value: 17703,
             objID: 4,
             attID: 11
         },
-        97: {
-            value: 4811,
-            objID: 4,
-            attID: 12
-        },
-        98: {
+        96: {
             value: 4417,
             objID: 4,
             attID: 13
         },
-        99: {
+        97: {
             value: 2013,
             objID: 4,
             attID: 14
         },
-        100: {
+        98: {
             value: 8791,
             objID: 4,
             attID: 15
         },
-        101: {
+        99: {
             value: 11976,
             objID: 4,
             attID: 16
         },
-        102: {
+        100: {
             value: 6214,
             objID: 4,
             attID: 17
         },
-        103: {
+        101: {
             value: 5706,
             objID: 4,
             attID: 18
         },
-        104: {
+        102: {
             value: 17764,
             objID: 4,
             attID: 19
         },
-        105: {
+        103: {
             value: 17510,
             objID: 4,
             attID: 20
         },
-        106: {
+        104: {
             value: 19471,
             objID: 4,
             attID: 21
         }
-        
+
     },
 
     attribute:{
@@ -688,7 +663,7 @@ var database = {
             warning: false,
             importance: 3
         }
-        
+
     },
 
     category:{
@@ -698,4 +673,3 @@ var database = {
     }
 
 }
-
