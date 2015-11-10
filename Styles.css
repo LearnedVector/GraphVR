@@ -1,7 +1,7 @@
 
 .sidebar {
     background-color:#1B9AAA;
-    height:93.1%;
+    height:100%;
     padding: 0px;
     margin-top: 0px;
     margin-left: -15px;
@@ -15,7 +15,7 @@
     margin: 0px;
     padding: 0px;
     background-color: #010D2A;
-    
+
 }
 
 .nav-custom a:hover {
@@ -49,7 +49,7 @@ border: 34px solid #979797;
 select {
     border-radius: 30px;
     color:#000000;
-    
+
 }
 
 .custom-align {
@@ -92,19 +92,15 @@ h3 {
 }
 .navbar-nav > li a:hover {
     background-color: #1B9AAA;
-    
+
 }
 
-
-
-
-
 .left-chart-style {
-    margin-left: 300px;
+  margin-left: 95%;
 }
 
 .importance1, .importance2, .importance3 {
-    margin: 5px; 
+    margin: 5px;
 }
 
 .warning.importance3, .warning.importance2, .warning.importance1 {
@@ -124,6 +120,17 @@ h3 {
 }
 
 .right-chart-style {
-    margin-left: -60px;
-    
+    margin-left: -18%;
+
+}
+
+.generalbar {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    position: relative;
+    height: 30;
+    width: 0;
+    color: white;
+    line-height: 30px;
 }
