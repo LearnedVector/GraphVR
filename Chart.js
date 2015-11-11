@@ -16,6 +16,7 @@ function get_options(data){
     html+="<option value='"+data["name"]+"'>"+data["name"]+"</option>";
     return html;
 }
+
 function clear_info(){
     $("#leftside").empty()
     $("#rightside").empty()
@@ -94,7 +95,6 @@ function getdifferenceArray(leftGraph,rightGraph)
         { //find identical attribute to compare
             if (leftGraph[i].att_Name == rightGraph[j].att_Name)
             {
-                //compare if left value is bigger
                 if (leftGraph[i].value > rightGraph[j].value)
                 {
                     var printablevalue_L = calc_difference(leftGraph[i].value,rightGraph[j].value);
@@ -125,9 +125,6 @@ function getdifferenceArray(leftGraph,rightGraph)
     //print arrays
     printGraph(leftGraph,"l");
     printGraph(rightGraph,"r");
-
-//    animate(leftGraph, "l");
-//    animate(rightGraph, "r");
 }
 
 
@@ -181,9 +178,6 @@ function animate(graphArray, side, i){
         var shiftLeftValue = null;
         }
 
-    console.log(shiftLeftValue)
-    console.log(graphArray[i].value)
-
     if (graphArray[i].value != 0){
       $("#"+graphArray[i].objName+[i]).animate({width:graphArray[i].value, left: shiftLeftValue},350)
       var name = graphArray[i].att_Name.replace(/\s/g, "&nbsp;")
@@ -194,4 +188,10 @@ function animate(graphArray, side, i){
         animate(graphArray,side, i)
     }
     },30)
+}
+
+function viewByImportance()
+{
+ $("#viewDescending").removeClass("active");
+ $("#viewImportance").addClass("active");    
 }
