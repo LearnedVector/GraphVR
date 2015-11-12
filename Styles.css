@@ -126,11 +126,41 @@ h3 {
 
 .generalbar {
     overflow: hidden;
+    font-size: 11px;
     text-overflow: ellipsis;
     word-break: keep-all;
     position: relative;
-    height: 30;
     width: 0;
     color: white;
     line-height: 30px;
+    height: 30px;
 }
+
+.callout {
+    display: none;
+}
+
+#rightside:hover .callout, #leftside:hover .callout{
+background-color: white; 
+background-size: auto;
+border: 1px solid gray;
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+color: black; 
+font-size: 12px;
+padding-top: 5px;
+padding-bottom: 0px;
+padding-left: 20px;
+padding-right: 20px;
+transition-delay: 0s;
+transition-duration: 0.8s;
+transition-property: all;
+transition-timing-function: ease-in-out;
+width: 135px;
+z-index: 11;
+float: right;
+display: inline;
+}
+

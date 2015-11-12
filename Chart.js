@@ -23,6 +23,7 @@ function clear_info(){
     $("#elem1-header").empty()
     $("#elem2-header").empty()
 }
+
 //finds information about the two selected objects
 function get_info(){
     //get the two selections
@@ -31,7 +32,7 @@ function get_info(){
 
     if (element1==element2)
     {
-      alert("cannot pick the same thing")
+      alert("Cannot pick the same thing")
     }
     else{
 
@@ -63,14 +64,13 @@ function find_id(value){
             objID=i;
         }
     }
-
     return objID;
 }
 
 //gets all the values of an object and returns an array
 function find_values(elemid,elementName){
     var graphArray = [];
-    for(var i=0; i<Object.keys(database.dataset).length; i++) {
+    for(var i=0; i<Object.keys(database.dataset).length; i++)     {
         if(database.dataset[i].objID == elemid)
         {
           var value = database.dataset[i].value
@@ -78,8 +78,10 @@ function find_values(elemid,elementName){
           var attName = database.attribute[attID].name
           var attWarning = database.attribute[attID].warning
           var attImportance = database.attribute[attID].importance
+          var printableVal = 0
+          var percentageDiff = 0
 
-          graphArray.push({objName:elementName, att_Name: attName, value: value, warning: attWarning, importance: attImportance})
+          graphArray.push({objName:elementName, att_Name: attName, value: value, warning: attWarning, importance: attImportance, printableVal:0, percentageDiff:0})
         }
     }
 
@@ -97,17 +99,20 @@ function getdifferenceArray(leftGraph,rightGraph)
             {
                 if (leftGraph[i].value > rightGraph[j].value)
                 {
-                    var printablevalue_L = calc_difference(leftGraph[i].value,rightGraph[j].value);
-                    leftGraph[i].value=printablevalue_L;
-                    rightGraph[j].value=0;
-                    //make right[i].value=0, so we won't print it later
+                    console.log("Found match");
+                    console.log(leftGraph[i]);
+                    console.log(rightGraph[j]);
+                    var printablevalue_L = calc_difference(leftGraph[i],rightGraph[j]);
+                        leftGraph[i].printableVal=printablevalue_L;
+                    rightGraph[j].printableVal=0;
+                    //make right[i].printableval =0, so we won't print it later
                 }
                 else
                 {
-                    var printablevalue_R = calc_difference(rightGraph[j].value,leftGraph[i].value);
-                    rightGraph[j].value=printablevalue_R;
-                    leftGraph[i].value=0;
-                //make left[i].value=0, so we won't print it later
+                    var printablevalue_R = calc_difference(rightGraph[j],leftGraph[i]);
+                    rightGraph[j].printableVal=printablevalue_R;
+                    leftGraph[i].printableVal=0;
+                //make left[i] printable =0, so we won't print it later
                 }
             }
             //else, if no same attribute,
@@ -119,9 +124,6 @@ function getdifferenceArray(leftGraph,rightGraph)
     leftGraph.sort(descending);
     rightGraph.sort(descending);
 
-    console.log(leftGraph);
-    console.log(rightGraph);
-
     //print arrays
     printGraph(leftGraph,"l");
     printGraph(rightGraph,"r");
@@ -130,22 +132,25 @@ function getdifferenceArray(leftGraph,rightGraph)
 
 function calc_difference(bignum, smallnum)
 {
-    var percentdifference = (Math.abs((bignum-smallnum)/(bignum+smallnum)))
-
+    var percentdifference = (Math.abs((bignum.value-smallnum.value)/(bignum.value+smallnum.value)))
+    
+//store percent diff into the array with 2 decimal point    
+bignum.percentageDiff=parseFloat(percentdifference*285).toFixed(2);
+    
     //convert value into a printable pixel
     var max=285* (Math.random()*(1.4-1)+1)
     var printable_value = max - (max*percentdifference)
+    
     return printable_value;
 }
 
 function descending(a,b){
-    return b.value-a.value;
+    return b.printableVal-a.printableVal;
 }
 
 function printGraph(graphArray, side)
 {
     var html=""
-
     for (var i=0; i<graphArray.length;i++)
     {
         if (graphArray[i].warning == true){
@@ -153,12 +158,13 @@ function printGraph(graphArray, side)
         }else {
             var warning = ""
         }
-
-        if (graphArray[i].value != 0){
+        if (graphArray[i].printableVal != 0){
           html+="<div id='"+graphArray[i].objName+[i]+"' class='"+warning+" generalbar importance"+graphArray[i].importance+"'></div>"
+          html+="<div class='callout'>";
+          html+=printCalloutVal(graphArray[i])
+          html+="</div>";
         }
     }
-
     if (side=='l')
     {
         $("#leftside").append(html);
@@ -173,13 +179,13 @@ function printGraph(graphArray, side)
 function animate(graphArray, side, i){
     setTimeout(function() {
     if(side == 'l') {
-        var shiftLeftValue = "-"+graphArray[i].value.toString()+"px";
+        var shiftLeftValue = "-"+graphArray[i].printableVal.toString()+"px";
         }else {
         var shiftLeftValue = null;
         }
 
     if (graphArray[i].value != 0){
-      $("#"+graphArray[i].objName+[i]).animate({width:graphArray[i].value, left: shiftLeftValue},350)
+      $("#"+graphArray[i].objName+[i]).animate({width:graphArray[i].printableVal, left: shiftLeftValue},350)
       var name = graphArray[i].att_Name.replace(/\s/g, "&nbsp;")
     $("#"+graphArray[i].objName+[i]).html(name)
     }
@@ -194,4 +200,60 @@ function viewByImportance()
 {
  $("#viewDescending").removeClass("active");
  $("#viewImportance").addClass("active");    
+}
+
+function printCalloutVal(object)
+{
+    //get the comparative object
+    var element1=$("#select1").val();
+    var element2=$("#select2").val();
+    var html="";
+    
+    //get element id
+    var elem1id=find_id(element1);
+    var elem2id=find_id(element2);
+    
+    //get attribute id
+    var attID = getAttID(object.att_Name);
+
+    //get the real values
+    realval1=actualValue(attID,elem1id);
+    realval2=actualValue(attID,elem2id);
+    
+    //content for the callout
+    html+="<b>"+object.att_Name+"</b>";
+    if (object.objName==element1)
+    {   
+         html+="<p>"+element1+": "+realval1+"  </br>"+element2+": "+realval2+"</br>";
+
+    }
+    else{
+        html+="<p>"+element2+": "+realval2+"</br>"+element1+": "+realval1+"</br>";
+    }
+    
+    html+=+object.percentageDiff+"% more</p>";
+    
+    return html;
+}
+
+//get the actual value
+function actualValue(attribute,objectID)
+{
+    //step through the database
+    for(var i=0; i<Object.keys(database.dataset).length; i++) {
+        //find the exact object and attribute
+        if (database.dataset[i].objID == objectID && database.dataset[i].attID == attribute)
+        {
+            return database.dataset[i].value;
+        }
+    }  
+}
+
+//finds the attribute ID
+function getAttID(att_name)
+{
+    for (var i=0; i<Object.keys(database.attribute).length; i++) {
+    if (att_name == database.attribute[i].name)
+            return i; //id
+    }
 }
