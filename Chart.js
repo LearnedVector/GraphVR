@@ -99,9 +99,9 @@ function getdifferenceArray(leftGraph,rightGraph)
             {
                 if (leftGraph[i].value > rightGraph[j].value)
                 {
-                    console.log("Found match");
-                    console.log(leftGraph[i]);
-                    console.log(rightGraph[j]);
+                    // console.log("Found match");
+                    // console.log(leftGraph[i]);
+                    // console.log(rightGraph[j]);
                     var printablevalue_L = calc_difference(leftGraph[i],rightGraph[j]);
                         leftGraph[i].printableVal=printablevalue_L;
                     rightGraph[j].printableVal=0;
@@ -133,14 +133,14 @@ function getdifferenceArray(leftGraph,rightGraph)
 function calc_difference(bignum, smallnum)
 {
     var percentdifference = (Math.abs((bignum.value-smallnum.value)/(bignum.value+smallnum.value)))
-    
-//store percent diff into the array with 2 decimal point    
+
+//store percent diff into the array with 2 decimal point
 bignum.percentageDiff=parseFloat(percentdifference*285).toFixed(2);
-    
+
     //convert value into a printable pixel
     var max=285* (Math.random()*(1.4-1)+1)
     var printable_value = max - (max*percentdifference)
-    
+
     return printable_value;
 }
 
@@ -160,20 +160,71 @@ function printGraph(graphArray, side)
         }
         if (graphArray[i].printableVal != 0){
           html+="<div id='"+graphArray[i].objName+[i]+"' class='"+warning+" generalbar importance"+graphArray[i].importance+"'></div>"
-          html+="<div class='callout'>";
+          html+="<div class='callout' id ='callout"+graphArray[i].objName+[i]+"'>";
           html+=printCalloutVal(graphArray[i])
           html+="</div>";
         }
     }
     if (side=='l')
     {
-        $("#leftside").append(html);
+        $("#leftside").append(html)
     }
     else{
-        $("#rightside").append(html);
+        $("#rightside").append(html)
     }
     var index = 0;
     animate(graphArray, side, index)
+    hoverOver(graphArray, side, graphArray.length)
+}
+
+function hoverOver(object, side, index){
+
+  if (side == 'l'){
+    $("#leftside").on('mouseenter', 'div', function(e){
+      console.log(e.pageX)
+      console.log(e.pageY)
+      for (i = 0; i < index; i++){
+        divId = object[i].objName+[i]
+        if ($(this).attr('id') == divId){
+          hoverCalloutId = "callout"+object[i].objName+[i]
+          $('#'+hoverCalloutId).css({'position':'fixed', 'top': e.pageY, 'left': e.pageX})
+          $('#'+hoverCalloutId).css('display', 'block')
+        }
+      }
+    })
+    $("#leftside").on('mouseleave', 'div', function(){
+      for (i = 0; i < index; i++){
+        divId = object[i].objName+[i]
+        if ($(this).attr('id') == divId){
+          hoverCalloutId = "callout"+object[i].objName+[i]
+          $('#'+hoverCalloutId).css('display', 'none')
+        }
+      }
+    })
+  }
+
+  if (side == 'r'){
+    $("#rightside").on('mouseenter', 'div', function(e){
+      for (i = 0; i < index; i++){
+        divId = object[i].objName+[i]
+        if ($(this).attr('id') == divId){
+          hoverCalloutId = "callout"+object[i].objName+[i]
+          $('#'+hoverCalloutId).css({'position':'fixed', 'top': e.pageY, 'left': e.pageX})
+          $('#'+hoverCalloutId).css('display', 'block')
+        }
+      }
+    })
+    $("#rightside").on('mouseleave', 'div', function(){
+      for (i = 0; i < index; i++){
+        divId = object[i].objName+[i]
+        if ($(this).attr('id') == divId){
+          hoverCalloutId = "callout"+object[i].objName+[i]
+          $('#'+hoverCalloutId).css('display', 'none')
+        }
+      }
+    })
+  }
+
 }
 
 function animate(graphArray, side, i){
@@ -199,40 +250,41 @@ function animate(graphArray, side, i){
 function viewByImportance()
 {
  $("#viewDescending").removeClass("active");
- $("#viewImportance").addClass("active");    
+ $("#viewImportance").addClass("active");
 }
 
-function printCalloutVal(object)
+function printCalloutVal(object, i)
 {
+
     //get the comparative object
     var element1=$("#select1").val();
     var element2=$("#select2").val();
     var html="";
-    
+
     //get element id
     var elem1id=find_id(element1);
     var elem2id=find_id(element2);
-    
+
     //get attribute id
     var attID = getAttID(object.att_Name);
 
     //get the real values
     realval1=actualValue(attID,elem1id);
     realval2=actualValue(attID,elem2id);
-    
+
     //content for the callout
     html+="<b>"+object.att_Name+"</b>";
     if (object.objName==element1)
-    {   
+    {
          html+="<p>"+element1+": "+realval1+"  </br>"+element2+": "+realval2+"</br>";
 
     }
     else{
         html+="<p>"+element2+": "+realval2+"</br>"+element1+": "+realval1+"</br>";
     }
-    
+
     html+=+object.percentageDiff+"% more</p>";
-    
+
     return html;
 }
 
@@ -246,7 +298,7 @@ function actualValue(attribute,objectID)
         {
             return database.dataset[i].value;
         }
-    }  
+    }
 }
 
 //finds the attribute ID

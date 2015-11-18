@@ -136,19 +136,20 @@ h3 {
     height: 30px;
 }
 
-.callout {
+/*.callout {
     display: none;
-}
+}*/
 
-#rightside:hover .callout, #leftside:hover .callout{
-background-color: white; 
+/*#rightside:hover .callout, #leftside:hover */
+.callout{
+background-color: white;
 background-size: auto;
 border: 1px solid gray;
 border-bottom-left-radius: 5px;
 border-bottom-right-radius: 5px;
 border-top-left-radius: 5px;
 border-top-right-radius: 5px;
-color: black; 
+color: black;
 font-size: 12px;
 padding-top: 5px;
 padding-bottom: 0px;
@@ -160,7 +161,5 @@ transition-property: all;
 transition-timing-function: ease-in-out;
 width: 135px;
 z-index: 11;
-float: right;
-display: inline;
+display: none;
 }
-
