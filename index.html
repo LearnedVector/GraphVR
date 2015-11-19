@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="Styles.css"/>
 <script src="data.js"></script>
 <script src="Chart.js"></script>
+<script src="viewByDescending.js"></script>
 
 <title>SEMANTIC CANVAS</title>
 
@@ -54,7 +55,7 @@
             <h4 class="header-margin">AND</h4>
             <select id="select2"></select>
             </form>
-            <button type="button" class="btn btn-default" onclick="get_info()">GO!</button>
+            <button type="button" class="btn btn-default" id="Go" onclick="Go()">GO!</button>
 
         </div>
 
@@ -64,7 +65,7 @@
             <div class="row sort-header">
                 <span class="inline buffer">DISPLAY BY</span>
                 <div class="btn-group">
-                <button type="button" class="btn btn-default active" onclick="get_info()" id="viewDescending">
+                <button type="button" class="btn btn-default" onclick="viewByDescending()" id="viewDescending">
                   <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
                  </button>
                  <button type="button" class="btn btn-default" onclick="viewByImportance()" id="viewImportance">
@@ -101,4 +102,18 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 </body>
+<script>
+//toggle button jQuery
+  $('.btn-group button').click(function(){
+      console.log($(this).attr('id'))
+      if ($(this).attr('id') == "viewDescending"){
+        $('#viewImportance').removeClass("active")
+        $('#viewDescending').addClass("active")
+      }else if ($(this).attr('id') == "viewImportance"){
+        $('#viewDescending').removeClass("active")
+        $('#viewImportance').addClass("active")
+      }
+    })
+
+</script>
 </html>
