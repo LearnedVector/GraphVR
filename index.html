@@ -8,6 +8,7 @@
 <script src="data.js"></script>
 <script src="Chart.js"></script>
 <script src="viewByDescending.js"></script>
+<script src="viewByImportance.js"></script>
 
 <title>SEMANTIC CANVAS</title>
 
@@ -105,7 +106,6 @@
 <script>
 //toggle button jQuery
   $('.btn-group button').click(function(){
-      console.log($(this).attr('id'))
       if ($(this).attr('id') == "viewDescending"){
         $('#viewImportance').removeClass("active")
         $('#viewDescending').addClass("active")

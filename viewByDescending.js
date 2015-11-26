@@ -46,7 +46,7 @@ function getdifferenceArray(leftGraph,rightGraph)
                 {
                     var printablevalue_R = calc_difference(rightGraph[j],leftGraph[i]);
                     rightGraph[j].printableVal=printablevalue_R;
-                    leftGraph[i].printableVal=0;
+                    leftGraph[i].printableVal = 0;
                 //make left[i] printable =0, so we won't print it later
                 }
             }
@@ -84,6 +84,7 @@ function descending(a,b){
 
 function printGraph(graphArray, side)
 {
+  // console.log(graphArray)
     var html=""
     for (var i=0; i<graphArray.length;i++)
     {
